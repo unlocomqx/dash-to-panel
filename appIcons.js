@@ -285,10 +285,20 @@ var taskbarAppIcon = Utils.defineClass({
             return;
         }
 
+        var useDirectPeek = Me.settings.get_boolean('direct-peek');
+
         if (this.actor.hover) {
-            this._previewMenu.requestOpen(this);
+            if (!useDirectPeek) {
+                this._previewMenu.requestOpen(this);
+            } else {
+                this._previewMenu.requestPeek(this.window);
+            }
         } else {
-            this._previewMenu.requestClose();
+            if (!useDirectPeek) {
+                this._previewMenu.requestClose();
+            } else {
+                this._previewMenu.requestEndPeek();
+            }
         }
     },
 
