@@ -1118,6 +1118,11 @@ const Settings = new Lang.Class({
                             'sensitive',
                             Gio.SettingsBindFlags.DEFAULT);
 
+        this._settings.bind('direct-peek',
+                            this._builder.get_object('direct_peek_switch'),
+                            'active',
+                            Gio.SettingsBindFlags.DEFAULT);
+
         this._settings.bind('show-tooltip',
                             this._builder.get_object('show_tooltip_switch'),
                             'active',

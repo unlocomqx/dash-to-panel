@@ -41,6 +41,7 @@ const T1 = 'openMenuTimeout';
 const T2 = 'closeMenuTimeout';
 const T3 = 'peekTimeout';
 const T4 = 'ensureVisibleTimeout';
+const T5 = 'endPeekTimeout';
 
 const MAX_TRANSLATION = 40;
 const HEADER_HEIGHT = 38;
@@ -260,6 +261,7 @@ var PreviewMenu = Utils.defineClass({
 
     requestPeek: function(window) {
         this._timeoutsHandler.remove(T3);
+        this._timeoutsHandler.remove(T5);
 
         if (Me.settings.get_boolean('peek-mode')) {
             if (this.peekInitialWorkspaceIndex < 0) {
@@ -268,6 +270,11 @@ var PreviewMenu = Utils.defineClass({
                 this._peek(window);
             }
         }
+    },
+
+    requestEndPeek: function() {
+        this._timeoutsHandler.remove(T5);
+        this._timeoutsHandler.add([T5, Me.settings.get_int('leave-timeout'), () => this._endPeek()]);
     },
 
     endPeekHere: function() {
